@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.square.dao.RecruitMapper">
+    <resultMap id="BaseResultMap" type="com.square.model.Recruit">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="jobname" property="jobname" jdbcType="VARCHAR"/>
+        <result column="salary" property="salary" jdbcType="VARCHAR"/>
+        <result column="`condition`" property="condition" jdbcType="VARCHAR"/>
+        <result column="education" property="education" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="eid" property="eid" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="label" property="label" jdbcType="VARCHAR"/>
+        <result column="content1" property="content1" jdbcType="VARCHAR"/>
+        <result column="content2" property="content2" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, jobname,salary,'condition',education,type,address,eid,createtime,state,url,label,content1,content2
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectList" resultType="com.square.model.Recruit">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_recruit a
+        where 1 = 1
+        <if test="null != id and  id != '' ">
+            AND a.`id` like concat('%',#{id},'%')
+        </if>
+        <if test="null != jobname and  jobname != '' ">
+            AND a.`jobname` like concat('%',#{jobname},'%')
+        </if>
+        <if test="null != salary and  salary != '' ">
+            AND a.`salary` like concat('%',#{salary},'%')
+        </if>
+        <if test="null != condition and  condition != '' ">
+            AND a.`condition` like concat('%',#{condition},'%')
+        </if>
+        <if test="null != education and  education != '' ">
+            AND a.`education` like concat('%',#{education},'%')
+        </if>
+        <if test="null != type and  type != '' ">
+            AND a.`type` like concat('%',#{type},'%')
+        </if>
+        <if test="null != address and  address != '' ">
+            AND a.`address` like concat('%',#{address},'%')
+        </if>
+        <if test="createtime != null ">
+            and date( a.`createtime`) = date(#{createtime,jdbcType=TIMESTAMP})
+
+        </if>
+        <if test="null != eid and  eid != '' ">
+            AND a.`eid` like concat('%',#{eid},'%')
+        </if>
+        <if test="null != state and  state != '' ">
+            AND a.`state` like concat('%',#{state},'%')
+        </if>
+        <if test="null != url and  url != '' ">
+            AND a.`url` like concat('%',#{url},'%')
+        </if>
+        <if test="null != label and  label != '' ">
+            AND a.`label` like concat('%',#{label},'%')
+        </if>
+        <if test="null != content1 and  content1 != '' ">
+            AND a.`content1` like concat('%',#{content1},'%')
+        </if>
+        <if test="null != content2 and  content2 != '' ">
+            AND a.`content2` like concat('%',#{content2},'%')
+        </if>
+    </select>
+
+
+    <!--根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_recruit
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="com.square.model.Recruit">
+        insert into tb_recruit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="jobname != null">
+                jobname,
+            </if>
+            <if test="salary != null">
+                salary,
+            </if>
+            <if test="condition != null">
+                `condition`,
+            </if>
+            <if test="education != null">
+                education,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="eid != null">
+                eid,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test=" state != null">
+                state,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="label != null">
+                label,
+            </if>
+            <if test="content1 != null">
+                content1,
+            </if>
+            <if test=" content2 != null">
+                content2,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="jobname != null">
+                #{jobname,jdbcType=VARCHAR},
+            </if>
+            <if test="salary != null">
+                #{salary,jdbcType=VARCHAR},
+            </if>
+            <if test="condition != null">
+                #{condition,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="eid != null">
+                #{eid,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="label != null">
+                #{label,jdbcType=VARCHAR},
+            </if>
+            <if test="content1 != null">
+                #{content1,jdbcType=VARCHAR},
+            </if>
+            <if test="content2 != null">
+                #{content2,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <!-- 更新-->
+    <update id="update" parameterType="com.square.model.Recruit">
+        update tb_recruit
+        <set>
+            <if test="jobname != null">
+                jobname= #{jobname,jdbcType=VARCHAR},
+            </if>
+            <if test="salary != null">
+                salary = #{salary,jdbcType=VARCHAR},
+            </if>
+            <if test="condition != null">
+                `condition` = #{condition,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                education = #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="eid != null">
+                eid = #{eid,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="label != null">
+                label = #{label,jdbcType=VARCHAR},
+            </if>
+            <if test="content1 != null">
+                content1 = #{content1,jdbcType=VARCHAR},
+            </if>
+            <if test="content2 != null">
+                content2 = #{content2,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <!-- 根据ID删除-->
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from tb_recruit
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="findTopBy" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_recruit
+        where state = #{state,jdbcType=VARCHAR}
+        order by createtime
+    </select>
+
+    <select id="selectnewJob" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_recruit
+        where state != #{state,jdbcType=VARCHAR}
+
+    </select>
+
+
+</mapper>

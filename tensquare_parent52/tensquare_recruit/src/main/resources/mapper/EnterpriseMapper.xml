@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.square.dao.EnterpriseMapper">
+    <resultMap id="BaseResultMap" type="com.square.model.Enterprise">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="labels" property="labels" jdbcType="VARCHAR"/>
+        <result column="coordinate" property="coordinate" jdbcType="VARCHAR"/>
+        <result column="ishot" property="ishot" jdbcType="VARCHAR"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+        <result column="jobcount" property="jobcount" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name,summary,address,labels,coordinate,ishot,logo,jobcount,url
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectList" resultType="com.square.model.Enterprise">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_enterprise a
+        where 1 = 1
+        <if test="null != id and  id != '' ">
+            AND a.`id` like concat('%',#{id},'%')
+        </if>
+        <if test="null != name and  name != '' ">
+            AND a.`name` like concat('%',#{name},'%')
+        </if>
+        <if test="null != summary and  summary != '' ">
+            AND a.`summary` like concat('%',#{summary},'%')
+        </if>
+        <if test="null != address and  address != '' ">
+            AND a.`address` like concat('%',#{address},'%')
+        </if>
+        <if test="null != labels and  labels != '' ">
+            AND a.`labels` like concat('%',#{labels},'%')
+        </if>
+        <if test="null != coordinate and  coordinate != '' ">
+            AND a.`coordinate` like concat('%',#{coordinate},'%')
+        </if>
+        <if test="null != ishot and  ishot != '' ">
+            AND a.`ishot` like concat('%',#{ishot},'%')
+        </if>
+        <if test="null !=logo and  logo != '' ">
+            AND a.`logo` like concat('%',#{logo},'%')
+        </if>
+        <if test="null != jobcount and  jobcount != '' ">
+            AND a.`jobcount` like concat('%',#{jobcount},'%')
+        </if>
+        <if test="null != url and  url != '' ">
+            AND a.`url` like concat('%',#{url},'%')
+        </if>
+
+    </select>
+
+
+    <!--根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_enterprise
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+    <!-- 新增-->
+    <insert id="insert" parameterType="com.square.model.Enterprise">
+        insert into tb_enterprise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name!= null">
+                name,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="labels != null">
+                labels,
+            </if>
+            <if test="coordinate != null">
+                coordinate,
+            </if>
+            <if test="ishot != null">
+                ishot,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+            <if test="jobcount != null">
+                jobcount,
+            </if>
+            <if test=" url != null">
+                url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="labels != null">
+                #{labels,jdbcType=VARCHAR},
+            </if>
+            <if test="coordinate != null">
+                #{coordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="ishot != null">
+                #{ishot,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="jobcount != null">
+                #{jobcount,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <!-- 更新-->
+    <update id="update" parameterType="com.square.model.Enterprise">
+        update tb_enterprise
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="labels != null">
+                labels = #{labels,jdbcType=VARCHAR},
+            </if>
+            <if test="coordinate != null">
+                coordinate = #{coordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="ishot != null">
+                ishot = #{ishot,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="jobcount != null">
+                jobcount = #{jobcount,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <!-- 根据ID删除-->
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from tb_enterprise
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <!--根据ID查询 -->
+    <select id="findByIshot" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_enterprise
+        where ishot = #{ishot,jdbcType=VARCHAR}
+    </select>
+</mapper>
